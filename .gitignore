@@ -1,0 +1,10 @@
+.settings
+
+/mySpring/*.classpath
+/mySpring/.settings
+/mySpring/*.springBeans
+/mySpring/*.project
+/mySpring/target
+/mySpring/bin
+/mySpring/.gitignore
+
