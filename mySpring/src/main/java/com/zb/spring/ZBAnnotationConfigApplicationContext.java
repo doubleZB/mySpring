@@ -1,6 +1,7 @@
 package com.zb.spring;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -90,9 +91,18 @@ public class ZBAnnotationConfigApplicationContext {
 	}
 
 	private Object doCreatBean(String beanName) {
-		Class<? extends BeanDefinition> clazz = beanDefinitionMap.get(beanName).getClass();
+		Class clazz = beanDefinitionMap.get(beanName).getBeanClass();
 		try {
 			Object newInstance = clazz.getDeclaredConstructor().newInstance();
+			Field[] fields = clazz.getDeclaredFields();
+			for (Field field : fields) {
+				field.setAccessible(true);
+				if(field.isAnnotationPresent(Autowired.class)) {
+					String name = field.getName();
+					Object bean = getBean(name);
+					field.set(newInstance, bean);
+				}
+			}
 			return newInstance;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

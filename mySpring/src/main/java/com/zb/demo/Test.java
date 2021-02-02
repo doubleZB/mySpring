@@ -1,5 +1,6 @@
 package com.zb.demo;
 
+import com.zb.service.UserService;
 import com.zb.spring.ZBAnnotationConfigApplicationContext;
 
 public class Test {
@@ -8,8 +9,9 @@ public class Test {
 	
 		//Æô¶¯spring
 		ZBAnnotationConfigApplicationContext context = new ZBAnnotationConfigApplicationContext(AppConfig.class);
-		Object userService = context.getBean("userService");
+		UserService userService =(UserService) context.getBean("userService");
 		System.out.println(userService);
+		userService.test();
 		
 	}
 }
